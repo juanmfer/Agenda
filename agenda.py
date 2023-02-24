@@ -144,13 +144,19 @@ if __name__ == '__main__':
     fechavardia = StringVar() ###### variable fecha
     
 ###### textos - text
-    seleccionar = ttk.Label(text='Seleccionar Fecha',font=font.Font(family="Verdana", size=12))
-    seleccionar.place(x=50, y=40)
-    agendartxt = ttk.Label(text='Recordatorio',font=font.Font(family="Verdana", size=12))
+    seleccionar = ttk.Label(text='Seleccionar Fecha',font=font.Font(family="Verdana", size=11))
+    seleccioning('Recordatorio', text=" Recordatorio", anchor=W)
+    tree.column('#0', stretch=NO, minwidth=0, width=0)
+    tree.column('#1', stretch=NO, minwidth=0, width=80)
+    tree.column('#2', stretch=NO, minwidth=0, width=200)
+    tree.column('#3', stretch=NO, minwidth=0, width=610)
+    iniciodb() ######  creo db si es necesario
+    root.mainloop()ar.place(x=50, y=40)
+    agendartxt = ttk.Label(text='Recordatorio',font=font.Font(family="Verdana", size=11))
     agendartxt.place(x=50, y=90)
 
 ###### Calendarios - calendar
-    micalendario = DateEntry(width=20, background='darkblue',foreground='white', borderwidth=20,font=font.Font(family="Verdana", size=12), textvariable=fechavar)
+    micalendario = DateEntry(width=20, background='darkblue',foreground='white', borderwidth=20,font=font.Font(family="Verdana", size=11), textvariable=fechavar)
     micalendario.pack(padx=10, pady=10)
     micalendario.place(x=200, y=40)
 
@@ -159,27 +165,27 @@ if __name__ == '__main__':
     agendar.place(x=200, y=85)
 
 ###### Botones
-    guardodb = Button(text="Guardar", width=14, font=font.Font(family="Verdana", size=12), command=agrego)
+    guardodb = Button(text="Guardar", width=14, font=font.Font(family="Verdana", size=11), command=agrego)
     guardodb.place(x=816, y=86)
 
 ##### labelframe - Eliminar - delete selection
     delselectreg = ttk.LabelFrame(root, text='Eliminar Selección')
     delselectreg .place(x=740, y=780)
-    borrodato = Button(delselectreg, text="Borrar Registro", width=14, font=font.Font(family="Verdana", size=12), command=EliminarReg)
+    borrodato = Button(delselectreg, text="Borrar Registro", width=14, font=font.Font(family="Verdana", size=11), command=EliminarReg)
     borrodato.pack(padx=15, pady=27)
 
 ##### labelFrame - Todos los recordatorios - all reg
     mostrartodosr = ttk.LabelFrame(root, text='Todos los Recordatorios')
     mostrartodosr .place(x=500, y=780)
-    actualizo = Button(mostrartodosr, text="Actualizar", width=14, font=font.Font(family="Verdana", size=12), command=actualizar)
+    actualizo = Button(mostrartodosr, text="Actualizar", width=14, font=font.Font(family="Verdana", size=11), command=actualizar)
     actualizo.pack(padx=15, pady=27)
 
 ##### LabelFrame - Diario - day
     lfdiario = ttk.LabelFrame(root, text='Recordatorios Diarios')
     lfdiario.place(x=40, y=780)
-    micalendario2 = DateEntry(lfdiario, width=20, background='darkblue',foreground='white', borderwidth=20,font=font.Font(family="Verdana", size=12), textvariable=fechavardia)
+    micalendario2 = DateEntry(lfdiario, width=20, background='darkblue',foreground='white', borderwidth=20,font=font.Font(family="Verdana", size=11), textvariable=fechavardia)
     micalendario2.pack(padx=15, pady=5)
-    mostrardia = Button(lfdiario,text="Mostrar", width=14, font=font.Font(family="Verdana", size=12), command=muestrodia)
+    mostrardia = Button(lfdiario,text="Mostrar", width=14, font=font.Font(family="Verdana", size=11), command=muestrodia)
     mostrardia.pack(padx=15, pady=10)
 
 ######  Treeview Muestro registros - 
