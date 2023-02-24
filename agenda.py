@@ -27,18 +27,14 @@ def crear_conexion(basedatos):
         return conn
     except Error as e:
         print(e)
-
     return conn
 
-
 def creo_tabla(conn, crear_tabla_sql):
-
     try:
         c = conn.cursor()
         c.execute(crear_tabla_sql)
     except Error as e:
         print(e)
-
 
 def iniciodb(): ######  creo base de datos - create db
 ##### Selecciona tu ubicacion 
@@ -50,21 +46,14 @@ def iniciodb(): ######  creo base de datos - create db
                                         fecha text NOT NULL,
                                         agendar text NOT NULL
                                     ); """
-
-
     # creo conexion a base de datos - create a database connection
     conn = crear_conexion(database)
-
     # creo las tablas - create tables
     if conn is not None:
         # creo la tabla agenda - create agenda table
         creo_tabla(conn, sql_crear_tabla_agenda)
-
     else:
         print("No se puede crear la base de datos - cannot create the database connection.")
-
-
-
 
 ###################################### SQLITE3 SELECT INSERT DELETE
 ###### insertar informacion
@@ -78,6 +67,7 @@ def agrego():
     conn.commit()
     muestro()
     conn.close()
+
 ###### Actualizo Tree
 def actualizar():
     conn = sqlite3.connect(r"agenda.db")
@@ -91,6 +81,7 @@ def actualizar():
     for i in registros:
         tree.insert("", tk.END, values=i)
     conn.close()
+
 ###### Muestro datos en Tree
 def muestro():
     conn = sqlite3.connect(r"agenda.db")
@@ -120,7 +111,19 @@ def EliminarReg():
     except Exception as e:
         print(e)
 
-
+##### Muestro registros por dia
+def muestrodia():
+    conn = sqlite3.connect(r"agenda.db")
+    fechavardiam = str(fechavardia.get())
+    #conn = sqlite3.connect(os.path.dirname(os.path.abspath(__file__)) + '/agenda.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM agenda WHERE fecha = ?", (fechavardiam, ))
+    registros = c.fetchall()
+    for reg in tree.get_children():
+        tree.delete(reg)
+    for i in registros:
+        tree.insert("", tk.END, values=i)
+    conn.close() 
 
 if __name__ == '__main__':
 ###### ventana principal - root window
@@ -138,6 +141,7 @@ if __name__ == '__main__':
     micalendario = Calendar(root,selectmode = "day") ######  crear calendario - create calendar
     fechavar = StringVar() ###### variable fecha
     agendarvar = StringVar() ###### variable recordatorio
+    fechavardia = StringVar() ###### variable fecha
     
 ###### textos - text
     seleccionar = ttk.Label(text='Seleccionar Fecha',font=font.Font(family="Verdana", size=12))
@@ -145,7 +149,7 @@ if __name__ == '__main__':
     agendartxt = ttk.Label(text='Recordatorio',font=font.Font(family="Verdana", size=12))
     agendartxt.place(x=50, y=90)
 
-###### Calendario - calendar
+###### Calendarios - calendar
     micalendario = DateEntry(width=20, background='darkblue',foreground='white', borderwidth=20,font=font.Font(family="Verdana", size=12), textvariable=fechavar)
     micalendario.pack(padx=10, pady=10)
     micalendario.place(x=200, y=40)
@@ -154,14 +158,29 @@ if __name__ == '__main__':
     agendar = ttk.Entry( justify=tk.LEFT, show="", width=50, font=font.Font(family="Verdana", size=14),style="MyEntry.TEntry",  textvariable=agendarvar)
     agendar.place(x=200, y=85)
 
-
 ###### Botones
     guardodb = Button(text="Guardar", width=14, font=font.Font(family="Verdana", size=12), command=agrego)
     guardodb.place(x=816, y=86)
-    actualizo = Button(text="Borrar Registro", width=14, font=font.Font(family="Verdana", size=12), command=EliminarReg)
-    actualizo.place(x=800, y=800)
-    borrodato = Button(text="Actualizar", width=14, font=font.Font(family="Verdana", size=12), command=actualizar)
-    borrodato.place(x=600, y=800)
+
+##### labelframe - Eliminar - delete selection
+    delselectreg = ttk.LabelFrame(root, text='Eliminar Selección')
+    delselectreg .place(x=740, y=780)
+    borrodato = Button(delselectreg, text="Borrar Registro", width=14, font=font.Font(family="Verdana", size=12), command=EliminarReg)
+    borrodato.pack(padx=15, pady=27)
+
+##### labelFrame - Todos los recordatorios - all reg
+    mostrartodosr = ttk.LabelFrame(root, text='Todos los Recordatorios')
+    mostrartodosr .place(x=500, y=780)
+    actualizo = Button(mostrartodosr, text="Actualizar", width=14, font=font.Font(family="Verdana", size=12), command=actualizar)
+    actualizo.pack(padx=15, pady=27)
+
+##### LabelFrame - Diario - day
+    lfdiario = ttk.LabelFrame(root, text='Recordatorios Diarios')
+    lfdiario.place(x=40, y=780)
+    micalendario2 = DateEntry(lfdiario, width=20, background='darkblue',foreground='white', borderwidth=20,font=font.Font(family="Verdana", size=12), textvariable=fechavardia)
+    micalendario2.pack(padx=15, pady=5)
+    mostrardia = Button(lfdiario,text="Mostrar", width=14, font=font.Font(family="Verdana", size=12), command=muestrodia)
+    mostrardia.pack(padx=15, pady=10)
 
 ######  Treeview Muestro registros - 
     tree = ttk.Treeview(root,columns=("Registro", "Fecha", "Recordatorio"),height=30, selectmode='browse', padding=10)
