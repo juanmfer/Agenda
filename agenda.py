@@ -145,13 +145,7 @@ if __name__ == '__main__':
     
 ###### textos - text
     seleccionar = ttk.Label(text='Seleccionar Fecha',font=font.Font(family="Verdana", size=11))
-    seleccioning('Recordatorio', text=" Recordatorio", anchor=W)
-    tree.column('#0', stretch=NO, minwidth=0, width=0)
-    tree.column('#1', stretch=NO, minwidth=0, width=80)
-    tree.column('#2', stretch=NO, minwidth=0, width=200)
-    tree.column('#3', stretch=NO, minwidth=0, width=610)
-    iniciodb() ######  creo db si es necesario
-    root.mainloop()ar.place(x=50, y=40)
+    seleccionar.place(x=50, y=40)
     agendartxt = ttk.Label(text='Recordatorio',font=font.Font(family="Verdana", size=11))
     agendartxt.place(x=50, y=90)
 
