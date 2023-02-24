@@ -164,13 +164,13 @@ if __name__ == '__main__':
 
 ##### labelframe - Eliminar - delete selection
     delselectreg = ttk.LabelFrame(root, text='Eliminar Selección')
-    delselectreg .place(x=740, y=780)
+    delselectreg.place(x=740, y=780)
     borrodato = Button(delselectreg, text="Borrar Registro", width=14, font=font.Font(family="Verdana", size=11), command=EliminarReg)
     borrodato.pack(padx=15, pady=27)
 
 ##### labelFrame - Todos los recordatorios - all reg
     mostrartodosr = ttk.LabelFrame(root, text='Todos los Recordatorios')
-    mostrartodosr .place(x=500, y=780)
+    mostrartodosr.place(x=500, y=780)
     actualizo = Button(mostrartodosr, text="Actualizar", width=14, font=font.Font(family="Verdana", size=11), command=actualizar)
     actualizo.pack(padx=15, pady=27)
 
